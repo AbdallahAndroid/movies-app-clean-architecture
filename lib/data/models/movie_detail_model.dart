@@ -118,39 +118,81 @@ class MovieDetailModel extends MovieDetailEntity {
   // ignore: overridden_fields
   final int voteCount;
 
-  factory MovieDetailModel.fromMap(Map<String, dynamic> json) =>
-      MovieDetailModel(
-        adult: json["adult"] ?? false,
-        backdropPath: json["backdrop_path"] ?? '',
-        belongsToCollection: json["belongs_to_collection"] ?? '',
-        budget: json["budget"] ?? 0,
-        genres: List<Genre>.from(json["genres"] ?? [].map((x) => Genre.fromMap(x))),
-        homepage: json["homepage"] ?? '',
-        id: json["id"] ?? 1,
-        imdbId: json["imdb_id"] ?? '',
-        originalLanguage: json["original_language"] ?? '',
-        originalTitle: json["original_title"] ?? 'No information',
-        overview: json["overview"] ?? '',
-        popularity: json["popularity"] ?? 0.0,
-        posterPath: json["poster_path"],
-        productionCompanies: List<ProductionCompany>.from(
-            json["production_companies"]
-                ?? [].map((x) => ProductionCompany.fromMap(x))),
-        productionCountries: List<ProductionCountry>.from(
-            json["production_countries"] ?? []
-                .map((x) => ProductionCountry.fromMap(x))),
-        releaseDate: json["release_date"] ?? '', 
-        revenue: json["revenue"] ?? 0,
-        runtime: json["runtime"] ?? 0,
-        spokenLanguages: List<SpokenLanguage>.from(
-            json["spoken_languages"] ?? [].map((x) => SpokenLanguage.fromMap(x))),
-        status: json["status"] ?? '',
-        tagline: json["tagline"] ?? '',
-        title: json["title"] ?? '',
-        video: json["video"] ?? false,
-        voteAverage: json["vote_average"] ?? 0.0,
-        voteCount: json["vote_count"] ?? 0,
-      );
+  factory MovieDetailModel.fromMap(Map<String, dynamic> json)  {
+
+    //genres
+    var genresList = <Genre>[];
+    if (json['genres'] != null) {
+      json['genres'].forEach((v) {
+        var mGenre = new Genre.fromMap(v);
+        //  Log.i("GenreModel - mGenre " + mGenre.name);
+        genresList.add(mGenre);
+      });
+    }
+
+    //product countries
+    List<ProductionCompany> listProductCompanies = [];
+    if (json['production_companies'] != null) {
+      json['production_companies'].forEach((v) {
+        var m = new ProductionCompany.fromMap(v);
+        //  Log.i("MovieDetailModel - product countries - m " + m.name);
+        listProductCompanies.add(m);
+      });
+    }
+
+    //countries
+    List<ProductionCountry> productionCountries = [];
+    if (json['production_countries'] != null) {
+      productionCountries = <ProductionCountry>[];
+      json['production_countries'].forEach((v) {
+        productionCountries.add(new ProductionCountry.fromMap(v));
+      });
+    }
+
+    //langauges
+    List<SpokenLanguage> spokenLanguages = [];
+    if (json['spoken_languages'] != null) {
+      spokenLanguages = <SpokenLanguage>[];
+      json['spoken_languages'].forEach((v) {
+        spokenLanguages.add(new SpokenLanguage.fromMap(v));
+      });
+    }
+
+    return MovieDetailModel(
+      spokenLanguages: spokenLanguages,
+      productionCountries: productionCountries,
+      genres: genresList,
+      adult: json["adult"] ?? false,
+      backdropPath: json["backdrop_path"] ?? '',
+      belongsToCollection: json["belongs_to_collection"] ?? '',
+      budget: json["budget"] ?? 0,
+      // genres: List<Genre>.from(json["genres"] ?? [].map((x) => Genre.fromMap(x))),
+      homepage: json["homepage"] ?? '',
+      id: json["id"] ?? 1,
+      imdbId: json["imdb_id"] ?? '',
+      originalLanguage: json["original_language"] ?? '',
+      originalTitle: json["original_title"] ?? 'No information',
+      overview: json["overview"] ?? '',
+      popularity: json["popularity"] ?? 0.0,
+      posterPath: json["poster_path"],
+      productionCompanies: listProductCompanies,
+      // productionCountries: List<ProductionCountry>.from(
+      //     json["production_countries"] ?? []
+      //         .map((x) => ProductionCountry.fromMap(x))),
+      releaseDate: json["release_date"] ?? '',
+      revenue: json["revenue"] ?? 0,
+      runtime: json["runtime"] ?? 0,
+      // spokenLanguages: List<SpokenLanguage>.from(
+      //     json["spoken_languages"] ?? [].map((x) => SpokenLanguage.fromMap(x))),
+      status: json["status"] ?? '',
+      tagline: json["tagline"] ?? '',
+      title: json["title"] ?? '',
+      video: json["video"] ?? false,
+      voteAverage: json["vote_average"] ?? 0.0,
+      voteCount: json["vote_count"] ?? 0,
+    );
+  }
+
 
   Map<String, dynamic> toMap() {
     return {

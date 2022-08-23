@@ -21,5 +21,6 @@ class ApiUrls {
   // static Function personDetails = (int id) => '/person/$id';
   // static Function personMovieCredits = (int id) => '/person/$id/movie_credits';
   static String videoThumbnail(String key) => 'https://img.youtube.com/vi/$key/0.jpg';
+  static String peopleImages(String actorId ) => '/person/$actorId/images?' ; //https://api.themoviedb.org/3/person/1136406/images?api_key=ccccc
 
 }

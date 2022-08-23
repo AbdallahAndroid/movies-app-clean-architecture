@@ -1,4 +1,5 @@
 import 'package:app_example/core/http_client/dio_implementation.dart';
+import 'package:app_example/core/utils/BackendConstant.dart';
 import 'package:app_example/data/datasources/movie_remote_datasource.dart';
 import 'package:app_example/data/repositories/genre_repository_implementation.dart';
 import 'package:app_example/data/repositories/movie_repository_implementation.dart';
@@ -29,6 +30,7 @@ import 'domain/usecases/get_popular_movies_usecase.dart';
 import 'domain/usecases/get_top_rated_movies_usecase.dart';
 import 'domain/usecases/get_trending_movies_usecase.dart';
 import 'domain/usecases/get_upcoming_movies_usecase.dart';
+import 'presentation/screens/actorDetail/people_detail_screen.dart';
 
 class AppModule extends Module {
   @override
@@ -44,11 +46,11 @@ class AppModule extends Module {
               BaseOptions(
                 baseUrl: "https://api.themoviedb.org/3",
                 headers: {
-                  'api-key': '',
+                  'api-key': BackendConstant.apiKeyAuth,
                   'contentType': 'application/json; charset=utf-8',
                   'language': 'en-US',
                   'authorization':
-                      'Bearer '
+                      'Bearer ' + BackendConstant.authToken
                 },
               ),
             )),
@@ -73,16 +75,25 @@ class AppModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, __) => const HomeScreen()),
+
     ChildRoute(
       '/detail',
       child: (context, args) => MovieDetailScreen(
         movieDetailArguments: args.data,
       ),
     ),
+
     ChildRoute(
       '/videos',
       child: (context, args) =>
           WatchVideosScreen(watchVideoArguments: args.data),
     ),
+
+    ChildRoute(
+      '/people',
+      child: (context, args) =>
+          PeopleDetailScreen(  args.data),
+    ),
+
   ];
 }

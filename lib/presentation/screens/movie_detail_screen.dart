@@ -231,7 +231,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          CastWidget(),
+                          CastWidget( castBloc: castBloc, ),
                           VideosWidget(
                             videosBloc: videosBloc,
                           ),

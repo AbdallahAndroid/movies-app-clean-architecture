@@ -52,6 +52,7 @@ dependencies:
   pedantic: ^1.11.1
   slidy: ^3.2.2+2
   youtube_player_flutter: ^8.0.0
+  fastor_app_ui_widget: ^0.0.97
 
 dev_dependencies:
   build_runner: ^2.1.5

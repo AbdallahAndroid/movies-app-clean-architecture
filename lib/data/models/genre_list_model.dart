@@ -20,9 +20,25 @@ class GenreModel extends GenreEntity {
 
   String toJson() => json.encode(toMap());
 
-  factory GenreModel.fromMap(Map<String, dynamic> json) => GenreModel(
-        genres: List<Genre>.from(json["genres"] ?? [].map((x) => Genre.fromMap(x))),
-      );
+
+  factory GenreModel.fromMap(Map<String, dynamic> json) {
+    var genres = <Genre>[];
+
+    if (json['genres'] != null) {
+      json['genres'].forEach((v) {
+        var mGenre = new Genre.fromMap(v);
+        //  Log.i("GenreModel - mGenre " + mGenre.name);
+        genres.add(mGenre);
+      });
+    }
+
+    return GenreModel(
+        genres: genres
+      // genres: List<Genre>.from(json["genres"] ?? [].map((x) => Genre.fromMap(x))),
+    );
+
+  }
+
 
   Map<String, dynamic> toMap() => {
         "genres": List<dynamic>.from(genres.map((x) => x.toMap())),
